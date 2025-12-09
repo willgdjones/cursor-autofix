@@ -1,28 +1,3 @@
-# Dependencies
-node_modules/
-
-# Build output
+demo/
 dist/
-
-# Environment variables
-.env
-.env.local
-.env.*.local
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# Logs
-*.log
-npm-debug.log*
-
-# Demo dependencies (if testing locally)
-demo/node_modules/
-
+node_modules/

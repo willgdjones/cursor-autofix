@@ -23,8 +23,10 @@ Wrap any dev command with `autofix`:
 ```bash
 autofix npm run dev
 autofix npx next dev
-autofix node server.js
+autofix "node --watch server.js"
 ```
+
+> **Tip:** Use `node --watch` (Node 18+) for automatic server restart when files change. Frameworks like Next.js and Vite have hot reload built-in.
 
 ## How It Works
 

@@ -27,17 +27,22 @@ export async function fixError(error: ParsedError): Promise<boolean> {
     });
 
     // Consume the stream and show progress
-    let lastUpdate = '';
+    let textBuffer = '';
     for await (const update of stream) {
       if (update.type === 'text-delta') {
-        // Show a simple progress indicator
-        if (lastUpdate !== '.') {
-          process.stdout.write(chalk.gray('.'));
-          lastUpdate = '.';
+        // Stream the agent's explanation to console
+        process.stdout.write(chalk.gray(update.text));
+        textBuffer += update.text;
+      } else if (update.type === 'tool-call-started') {
+        // Show when agent starts using a tool
+        if (textBuffer) {
+          console.log(); // New line after text
+          textBuffer = '';
         }
+        console.log(chalk.cyan(`\n[autofix] 🔧 ${update.toolCall.type}: ${getToolDescription(update.toolCall)}`));
       } else if (update.type === 'tool-call-completed') {
         if (update.toolCall.type === 'edit' || update.toolCall.type === 'write') {
-          console.log(chalk.green(`\n[autofix] Modified: ${getFilePath(update.toolCall)}`));
+          console.log(chalk.green(`[autofix] ✅ Modified: ${getFilePath(update.toolCall)}`));
         }
       }
     }
@@ -81,5 +86,15 @@ function getFilePath(toolCall: any): string {
     return toolCall.args.file_path;
   }
   return 'file';
+}
+
+function getToolDescription(toolCall: any): string {
+  if (toolCall.type === 'read') {
+    return `Reading ${toolCall.args?.path || 'file'}`;
+  }
+  if (toolCall.type === 'edit' || toolCall.type === 'write') {
+    return `Editing ${toolCall.args?.path || toolCall.args?.file_path || 'file'}`;
+  }
+  return toolCall.type;
 }
 

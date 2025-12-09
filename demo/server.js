@@ -2,13 +2,8 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-// Simulated database - sometimes returns null (the bug!)
+// Simulated database
 function getUsers() {
-  // BUG: This randomly returns null instead of an array
-  // In a real app, this might happen when DB connection fails
-  if (Math.random() > 0.3) {
-    return null; // Oops! Should return [] instead
-  }
   return [
     { id: 1, name: 'Alice' },
     { id: 2, name: 'Bob' },
@@ -36,8 +31,8 @@ app.get('/health', (req, res) => {
 app.get('/users', (req, res) => {
   const users = getUsers();
   
-  // BUG: users might be null, but we call .map() on it anyway
-  const userNames = users ? users.map(u => u.name) : [];
+  // BUG: 'nmae' is a typo - should be 'name'!
+  const userNames = users.map(u => u.name.toUpperCase());
   
   res.json({ users: userNames });
 });
