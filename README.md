@@ -36,19 +36,46 @@ autofix "node --watch server.js"
 │                                                              │
 │  $ autofix npm run dev                                       │
 │                                                              │
-│  [autofix] Starting: npm run dev                             │
-│  [autofix] Monitoring for errors...                          │
+│  🔧 AutoFix                                                   │
+│  Starting: npm run dev                                       │
+│  Monitoring for errors...                                    │
 │                                                              │
-│  > Ready on http://localhost:3000                            │
+│  Demo server running at http://localhost:3000                │
 │                                                              │
-│  TypeError: Cannot read property 'map' of undefined          │
-│    at UserList (src/components/UserList.tsx:42)              │
+│  TypeError: Cannot read properties of undefined              │
+│    (reading 'toUpperCase')                                   │
+│    at server.js:35:43                                       │
 │                                                              │
-│  [autofix] 🔍 Error detected!                                │
+│  [autofix] 🔍 Error detected!                               │
+│    Type: TypeError                                           │
+│    Message: Cannot read properties of undefined             │
+│      (reading 'toUpperCase')                                 │
+│    File: server.js:35                                        │
+│                                                              │
 │  [autofix] 🔧 Fixing...                                      │
-│  [autofix] ✅ Fixed src/components/UserList.tsx              │
+│  I'll help you fix this TypeError. Let me first examine     │
+│  the server.js file to understand the context around         │
+│  line 35.                                                    │
 │                                                              │
-│  > Compiled successfully                                     │
+│  [autofix] 🔧 read: Reading server.js                       │
+│                                                              │
+│  I can see the issue clearly. On line 35, there's a typo:    │
+│  `u.nmee` should be `u.name`. The property `nmee` doesn't  │
+│  exist on the user objects, so it returns `undefined`, and   │
+│  calling `toUpperCase()` on `undefined` causes the          │
+│  TypeError.                                                 │
+│                                                              │
+│  [autofix] 🔧 edit: Editing server.js                      │
+│  [autofix] ✅ Modified: server.js                          │
+│                                                              │
+│  Restarting 'server.js'                                      │
+│  Demo server running at http://localhost:3000                │
+│                                                              │
+│  The error has been fixed. The issue was a simple typo on   │
+│  line 35 where `u.nmee` should have been `u.name`.          │
+│                                                              │
+│  [autofix] ✅ Fixed server.js                               │
+│    Hot reload should kick in shortly...                      │
 │                                                              │
 └──────────────────────────────────────────────────────────────┘
 ```
@@ -56,8 +83,9 @@ autofix "node --watch server.js"
 1. **Wraps** your dev server as a child process
 2. **Monitors** stdout/stderr for error patterns
 3. **Detects** errors and extracts file/line info from stack traces
-4. **Fixes** the code using Cursor AI agent
-5. **Hot reload** picks up the changes automatically
+4. **Analyzes** the code and explains the root cause
+5. **Fixes** the code using Cursor AI agent
+6. **Hot reload** picks up the changes automatically
 
 ## Options
 
@@ -65,15 +93,6 @@ autofix "node --watch server.js"
 autofix --help          # Show help
 autofix --dry-run ...   # Detect errors without fixing
 ```
-
-## Supported Error Types
-
-- JavaScript/TypeScript runtime errors
-- React/Next.js compilation errors
-- TypeScript type errors
-- ESLint errors
-- Vite/Webpack build errors
-- Node.js crashes
 
 ## Requirements
 
