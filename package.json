@@ -1,6 +1,6 @@
 {
   "name": "cursor-autofix",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Auto-fix errors in your dev server as they happen using Cursor SDK",
   "type": "module",
   "main": "dist/index.js",
