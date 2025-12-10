@@ -1,11 +1,11 @@
 {
   "name": "cursor-autofix",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Auto-fix errors in your dev server as they happen using Cursor SDK",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "autofix": "./dist/index.js"
+    "autofix": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -26,7 +26,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/willgdjones/cursor-autofix"
+    "url": "git+https://github.com/willgdjones/cursor-autofix.git"
   },
   "homepage": "https://github.com/willgdjones/cursor-autofix#readme",
   "bugs": {
